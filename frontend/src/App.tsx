@@ -5,6 +5,7 @@ function App() {
   return (
     <>
         <div>cloudFrontのトライ</div>
+        <div>S3バケットがちゃんと更新かかるかドキドキワクワク</div>
     </>
   );
 }
