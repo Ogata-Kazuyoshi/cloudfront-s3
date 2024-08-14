@@ -12,6 +12,7 @@ function App() {
         <div>cacheクリアを入れた。github-ci.ymlに</div>
         <div>cloudfrontへのアクセス権限がAssumeに足りてなかったので追加した</div>
         <div>これで完璧にいけたかもしれません。やったーーーーー</div>
+        <div>不要なコメントアウト削除した。あとはREADMeをちゃんと書きなさい</div>
     </>
   );
 }

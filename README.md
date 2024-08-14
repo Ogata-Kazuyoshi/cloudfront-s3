@@ -63,6 +63,7 @@
 <summary> 1. cloudformation-baseをデプロイ</summary>
 
 - リージョンの設定と、アクセスキーの情報だけ環境変数で必要
+- ぶっちゃけVPC使わないので、このデプロイはなくて良い。CloudFrontはグローバルでVPCに依存しない
 
 ```zh
 export AWS_DEFAULT_REGION=ap-northeast-1
