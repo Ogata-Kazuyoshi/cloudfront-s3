@@ -6,6 +6,7 @@ function App() {
     <>
         <div>cloudFrontのトライ</div>
         <div>S3バケットがちゃんと更新かかるかドキドキワクワク</div>
+        <div>Assumeロールミス</div>
     </>
   );
 }
