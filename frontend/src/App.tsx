@@ -10,6 +10,7 @@ function App() {
         <div>やば問題なく、CloudFrontも書き換えできちゃうぜ！！！</div>
         <div>え？更新されないとかそんな残念なことあるの？・・・・</div>
         <div>cacheクリアを入れた。github-ci.ymlに</div>
+        <div>cloudfrontへのアクセス権限がAssumeに足りてなかったので追加した</div>
     </>
   );
 }
