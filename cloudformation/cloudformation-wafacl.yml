@@ -1,0 +1,79 @@
+#AWSTemplateFormatVersion: '2010-09-09'
+#Description: WAF by Cloud Front
+#Resources:
+#  WebACL: # WAF本体はこの  WebACL で作成します
+#    Type: AWS::WAFv2::WebACL
+#    Properties:
+#      Name: ogata-cloudfront-webacl
+#      Scope: CLOUDFRONT # CloudFront用のWAFなのでScopeは CLOUDFRONT にしましょう
+#      DefaultAction:
+#        Block: {}
+#      VisibilityConfig:
+#        SampledRequestsEnabled: true
+#        CloudWatchMetricsEnabled: true
+#        MetricName: webaclcloudfront
+#      Rules: # WAFのアクセス制御の具体的な方法はこの Rules で設定します
+#        - Name: rules-proxy-test
+#          Priority: 0
+#          Action:
+#            Allow: {}
+#          Statement:
+#            IPSetReferenceStatement:
+#              Arn: !GetAtt WAFIPSet.Arn # ここでは後述の WAFIPSet で作成したIP情報のARNを参照するようにしています
+#          VisibilityConfig:
+#            SampledRequestsEnabled: true
+#            CloudWatchMetricsEnabled: true
+#            MetricName: rules-proxy-test
+#
+#  WAFIPSet: # アクセスを許可したいIPはこの WAFIPSet で設定します
+#    Type: AWS::WAFv2::IPSet
+#    Properties:
+#      Name: ogata-cloudfront-ipset
+#      Scope: CLOUDFRONT # WebACLと同じくここもCLOUDFRONTと指定します
+#      IPAddressVersion: IPV4
+#      Addresses: # 許可させたいIPをこの Addresses に記載します
+#        - 13.114.22.14/32
+#Outputs:
+#  CloudFrontWAF:
+#    Value: !GetAtt WebACL.Arn # WAFのARNを CloudFrontWAF という論理名で出力して、CloudFrontから参照できるようにします
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for S3 bucket, CloudFront distribution with OAC, and WAF IP set
+Resources:
+
+  WAFIPSet:
+    Type: AWS::WAFv2::IPSet
+    Properties:
+      Name: ogata-cloudfront-ipset
+      Scope: CLOUDFRONT
+      IPAddressVersion: IPV4
+      Addresses:
+       - 13.114.22.14/32
+
+  WAFWebACL:
+   Type: AWS::WAFv2::WebACL
+   Properties:
+    Name: ogata-cloudfront-webacl
+    Scope: CLOUDFRONT
+    DefaultAction:
+     Block: {}
+    Rules:
+     - Name: AllowSpecificIP
+       Priority: 1
+       Action:
+         Allow: {}
+       Statement:
+         IPSetReferenceStatement:
+           Arn: !GetAtt WAFIPSet.Arn
+       VisibilityConfig:
+         SampledRequestsEnabled: true
+         CloudWatchMetricsEnabled: true
+         MetricName: AllowSpecificIPRule
+    VisibilityConfig:
+     SampledRequestsEnabled: true
+     CloudWatchMetricsEnabled: true
+     MetricName: ogata-cloudfront-webacl
+
+Outputs:
+  CloudFrontWAF:
+    Value: !GetAtt WAFWebACL.Arn # WAFのARNを CloudFrontWAF という論理名で出力して、CloudFrontから参照できるようにします
