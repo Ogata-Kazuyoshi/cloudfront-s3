@@ -7,6 +7,7 @@ function App() {
         <div>cloudFrontのトライ</div>
         <div>S3バケットがちゃんと更新かかるかドキドキワクワク</div>
         <div>Assumeロールミス</div>
+        <div>やば問題なく、CloudFrontも書き換えできちゃうぜ！！！</div>
     </>
   );
 }
