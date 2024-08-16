@@ -17,46 +17,6 @@
 
 </details>
 
-
-# cognitoの設定
-
-<details>
-<summary> 1. 特に別のIdPと連携しないなら、チェックなしで次に</summary>
-
-![](./assets/images/cognito1.png)
-
-</details>
-
-<details>
-<summary> 2. MFA認証は入れる方がおすすめ</summary>
-
-![](./assets/images/cognito2.png)
-
-</details>
-
-<details>
-<summary> 3. とりあえずエラーが出るのでCognitoの方を設定</summary>
-
-![](./assets/images/cognito3.png)
-
-</details>
-
-<details>
-<summary> 4. アプリケーションとの統合部分（やること多い）</summary>
-
-- ホストされた認証ページにチュックを入れて、springsecurityのauthorize-urlからアクセスできるCognitoドメインの作成
-- 秘密クライエントにチェックを入れて、シークレットの生成
-- コールバックURIの登録
-- スコープをopenIDで設定（できるだけ少ない情報にしたかった）
-- 実際に取れそうなPrincipalは下記の添付
-
-![](./assets/images/cognito4.png)
-![](./assets/images/cognito5.png)
-![](./assets/images/cognito6.png)
-![](./assets/images/cognito-principal.png)
-
-</details>
-
 # 作業手順
 
 <details>
@@ -78,8 +38,6 @@ export AWS_DEFAULT_REGION=ap-northeast-1
 
 ```zh
 export AWS_DEFAULT_REGION=ap-northeast-1
-export WAF_ACL_REGION=us-east-1
-export CLOUDFRONT_REGION=ap-northeast-1
 export GITHUB_ACCOUNT=hogehoge
 export GITHUB_REPOSITORY=hogehoge
 ```
@@ -97,8 +55,7 @@ export GITHUB_REPOSITORY=hogehoge
 <summary> 4. cloudformation-wafaclをデプロイ</summary>
 
 - wafaclをcloudformationでデプロイするにはバージニア（us-east-1）じゃないとできない。
-- そのため、CloudFront作成のCloudForamationとは分けて、且つMakefile実行時にリージョンを切り替えれるように環境変数を設定する
-- CLOUDFRONT_REGIONとWAF_ACL_REGIONで実行時に切り替え
+- そのため、CloudFront作成のCloudForamationとは分けて、且つMakefile実行時にリージョンを切り替えれるようにコマンドラインに --region オプションをつける
 
 </details>
 
